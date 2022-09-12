@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <div >
+      <a href="#exp1">fork</a>
+      <a href="#exp2">fcfs</a>
+      <a href="#exp3">Non Preemtive sjf</a>
+    </div>
+<div id="exp1">
+    <pre>
+      '''
+      clude<iostream>
+using namespace std;
+
+struct process
+{
+    int id,at,bt,wt,tat,ct,start,iscomp,btrem,pr;
+};
+
+int main()
+{
+    int n;
+    cout<<"enter n";
+    cin >> n;
+    process p[n];
+    for (int i=0;i<n;i++)
+    {
+        cout<<"enter arrival time";
+        cin>>p[i].at;
+        cout<<"enter burst time";
+        cin>>p[i].bt;
+        cout<<"enter priority";
+        cin>>p[i].pr;
+        p[i].id=i;
+        p[i].iscomp=0;
+        p[i].btrem=p[i].bt;
+    }
+
+    int time =0;
+    int completed=0;
+
+    //
+
+    cout<<"p\tat\tbt\tct\ttat\twt\n";
+    for(int i=0;i<n;i++)
+    {
+        cout<<p[i].id<<"\t"<<p[i].at<<"\t"<<p[i].bt<<"\t"<<p[i].ct<<"\t"<<p[i].tat<<"\t"<<p[i].wt<<"\n";
+    }
+
+
+
+
+
+
+
+    //sjf non
+    //********************
+    // while(completed != n)
+    // {
+    //     int min=1000;
+    //     int pid=-1;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         if(p[i].at<=time && p[i].iscomp==0)
+    //         {
+    //             if(p[i].bt<min)
+    //             {
+    //                 min=p[i].bt;
+    //                 pid=i;
+    //             }
+    //             if(p[i].bt==min)
+    //             {
+    //                 if(p[i].at<p[pid].at)
+    //                 {
+    //                     min=p[i].bt;
+    //                     pid=i;
+    //                 }
+    //             }
+    //         }
+
+    //     }
+    //     if(pid == -1)
+    //         {
+    //             time++;
+    //         }
+    //         else
+    //         {
+    //             p[pid].start=time;
+    //             p[pid].ct=p[pid].start+p[pid].bt;
+    //             p[pid].tat=p[pid].ct-p[pid].at;
+    //             p[pid].wt=p[pid].tat-p[pid].bt;
+    //             completed ++;
+    //             p[pid].iscomp=1;
+    //             time=p[pid].ct;
+
+    //         }
+    // }
+
+    //sjf pree
+    //********************
+    //  while(completed != n)
+    // {
+    //     int min=1000;
+    //     int pid=-1;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         if(p[i].at<=time && p[i].iscomp==0)
+    //         {
+    //             if(p[i].btrem<min)
+    //             {
+    //                 min=p[i].btrem;
+    //                 pid=i;
+    //             }
+    //             if(p[i].btrem==min)
+    //             {
+    //                 if(p[i].at<p[pid].at)
+    //                 {
+    //                     min=p[i].btrem;
+    //                     pid = i;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if(pid == -1)
+    //     {
+    //         time++;
+    //     }
+    //     else
+    //     {
+    //         if(p[pid].btrem==p[pid].bt)
+    //         {
+    //             p[pid].start=time;
+    //         }
+    //         p[pid].btrem-=1;
+    //         time++;
+    //         if(p[pid].btrem==0)
+    //         {
+    //             completed++;
+    //             p[pid].iscomp=1;
+    //             p[pid].ct=time;
+    //             p[pid].tat=p[pid].ct-p[pid].at;
+    //             p[pid].wt=p[pid].tat-p[pid].bt;
+    //         }
+    //     }
+    // }
+
+    //priority non pree
+    //********************
+    // while(completed != n)
+    // {
+    //     int min=1000;
+    //     int pid=-1;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         if(p[i].at<=time && p[i].iscomp==0)
+    //         {
+    //             if(p[i].pr < min)
+    //             {
+    //                 min=p[i].pr;
+    //                 pid =i;
+    //             }
+    //             if(p[i].pr==min)
+    //             {
+    //                 if(p[i].at<p[pid].at)
+    //                 {
+    //                     min=p[i].pr;
+    //                     pid =i;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if(pid == -1)
+    //     {
+    //         time++;
+    //     }
+    //     else
+    //     {
+    //         p[pid].start=time;
+    //         p[pid].ct=p[pid].start+p[pid].bt;
+    //         p[pid].tat=p[pid].ct-p[pid].at;
+    //         p[pid].wt=p[pid].tat-p[pid].bt;
+    //         time=p[pid].ct;
+    //         completed ++;
+    //         p[pid].iscomp=1;
+
+
+    //     }
+    // }
+
+    //priority pree
+    //*********************
+    // while(completed !=n)
+    // {
+    //     int min=1000;
+    //     int pid=-1;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         if(p[i].at<=time && p[i].iscomp==0)
+    //         {
+    //             if(p[i].pr<min)
+    //             {
+    //                 min=p[i].pr;
+    //                 pid=i;
+    //             }
+    //             if(p[i].pr == min)
+    //             {
+    //                 if(p[i].at<p[pid].at)
+    //                 {
+    //                     min=p[i].pr;
+    //                     pid=i;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if (pid ==-1)
+    //     {
+    //         time++;
+    //     }
+    //     else
+    //     {
+    //         if(p[pid].btrem==p[pid].bt)
+    //         {
+    //             p[pid].start=time;
+    //         }
+    //         time++;
+    //         p[pid].btrem-=1;
+    //         if(p[pid].btrem==0)
+    //         {
+    //             p[pid].ct=time;
+    //             p[pid].tat=p[pid].ct-p[pid].at;
+    //             p[pid].wt=p[pid].tat-p[pid].bt;
+    //             p[pid].iscomp=1;
+    //             completed++;
+    //         }
+    //     }
+    // }
+}
+clude<iostream>
+using namespace std;
+
+struct process
+{
+    int id,at,bt,wt,tat,ct,start,iscomp,btrem,pr;
+};
+
+int main()
+{
+    int n;
+    cout<<"enter n";
+    cin >> n;
+    process p[n];
+    for (int i=0;i<n;i++)
+    {
+        cout<<"enter arrival time";
+        cin>>p[i].at;
+        cout<<"enter burst time";
+        cin>>p[i].bt;
+        cout<<"enter priority";
+        cin>>p[i].pr;
+        p[i].id=i;
+        p[i].iscomp=0;
+        p[i].btrem=p[i].bt;
+    }
+
+    int time =0;
+    int completed=0;
+
+    //
+
+    cout<<"p\tat\tbt\tct\ttat\twt\n";
+    for(int i=0;i<n;i++)
+    {
+        cout<<p[i].id<<"\t"<<p[i].at<<"\t"<<p[i].bt<<"\t"<<p[i].ct<<"\t"<<p[i].tat<<"\t"<<p[i].wt<<"\n";
+    }
+
+
+
+
+
+
+
+    //sjf non
+    //********************
+    // while(completed != n)
+    // {
+    //     int min=1000;
+    //     int pid=-1;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         if(p[i].at<=time && p[i].iscomp==0)
+    //         {
+    //             if(p[i].bt<min)
+    //             {
+    //                 min=p[i].bt;
+    //                 pid=i;
+    //             }
+    //             if(p[i].bt==min)
+    //             {
+    //                 if(p[i].at<p[pid].at)
+    //                 {
+    //                     min=p[i].bt;
+    //                     pid=i;
+    //                 }
+    //             }
+    //         }
+
+    //     }
+    //     if(pid == -1)
+    //         {
+    //             time++;
+    //         }
+    //         else
+    //         {
+    //             p[pid].start=time;
+    //             p[pid].ct=p[pid].start+p[pid].bt;
+    //             p[pid].tat=p[pid].ct-p[pid].at;
+    //             p[pid].wt=p[pid].tat-p[pid].bt;
+    //             completed ++;
+    //             p[pid].iscomp=1;
+    //             time=p[pid].ct;
+
+    //         }
+    // }
+
+    //sjf pree
+    //********************
+    //  while(completed != n)
+    // {
+    //     int min=1000;
+    //     int pid=-1;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         if(p[i].at<=time && p[i].iscomp==0)
+    //         {
+    //             if(p[i].btrem<min)
+    //             {
+    //                 min=p[i].btrem;
+    //                 pid=i;
+    //             }
+    //             if(p[i].btrem==min)
+    //             {
+    //                 if(p[i].at<p[pid].at)
+    //                 {
+    //                     min=p[i].btrem;
+    //                     pid = i;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if(pid == -1)
+    //     {
+    //         time++;
+    //     }
+    //     else
+    //     {
+    //         if(p[pid].btrem==p[pid].bt)
+    //         {
+    //             p[pid].start=time;
+    //         }
+    //         p[pid].btrem-=1;
+    //         time++;
+    //         if(p[pid].btrem==0)
+    //         {
+    //             completed++;
+    //             p[pid].iscomp=1;
+    //             p[pid].ct=time;
+    //             p[pid].tat=p[pid].ct-p[pid].at;
+    //             p[pid].wt=p[pid].tat-p[pid].bt;
+    //         }
+    //     }
+    // }
+
+    //priority non pree
+    //********************
+    // while(completed != n)
+    // {
+    //     int min=1000;
+    //     int pid=-1;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         if(p[i].at<=time && p[i].iscomp==0)
+    //         {
+    //             if(p[i].pr < min)
+    //             {
+    //                 min=p[i].pr;
+    //                 pid =i;
+    //             }
+    //             if(p[i].pr==min)
+    //             {
+    //                 if(p[i].at<p[pid].at)
+    //                 {
+    //                     min=p[i].pr;
+    //                     pid =i;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if(pid == -1)
+    //     {
+    //         time++;
+    //     }
+    //     else
+    //     {
+    //         p[pid].start=time;
+    //         p[pid].ct=p[pid].start+p[pid].bt;
+    //         p[pid].tat=p[pid].ct-p[pid].at;
+    //         p[pid].wt=p[pid].tat-p[pid].bt;
+    //         time=p[pid].ct;
+    //         completed ++;
+    //         p[pid].iscomp=1;
+
+
+    //     }
+    // }
+
+    //priority pree
+    //*********************
+    // while(completed !=n)
+    // {
+    //     int min=1000;
+    //     int pid=-1;
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         if(p[i].at<=time && p[i].iscomp==0)
+    //         {
+    //             if(p[i].pr<min)
+    //             {
+    //                 min=p[i].pr;
+    //                 pid=i;
+    //             }
+    //             if(p[i].pr == min)
+    //             {
+    //                 if(p[i].at<p[pid].at)
+    //                 {
+    //                     min=p[i].pr;
+    //                     pid=i;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     if (pid ==-1)
+    //     {
+    //         time++;
+    //     }
+    //     else
+    //     {
+    //         if(p[pid].btrem==p[pid].bt)
+    //         {
+    //             p[pid].start=time;
+    //         }
+    //         time++;
+    //         p[pid].btrem-=1;
+    //         if(p[pid].btrem==0)
+    //         {
+    //             p[pid].ct=time;
+    //             p[pid].tat=p[pid].ct-p[pid].at;
+    //             p[pid].wt=p[pid].tat-p[pid].bt;
+    //             p[pid].iscomp=1;
+    //             completed++;
+    //         }
+    //     }
+    // }
+}
+
+      '''
+
+</pre>
+</div>
+<hr>
+<div id="exp2">
+  <pre>
+    #include<stdio.h>
+
+void findWaitingTime(int processes[], int n, int bt[], int wt[])
+{
+    wt[0] = 0;
+    for (int  i = 1; i < n ; i++ ){
+        wt[i] =  bt[i-1] + wt[i-1] ;
+    }
+}
+
+void findTurnAroundTime( int processes[], int n, int bt[], int wt[], int tat[])
+{
+    for (int  i = 0; i < n ; i++){
+        tat[i] = bt[i] + wt[i];
+    }
+}
+
+void findavgTime( int processes[], int n, int bt[])
+{
+    int wt[n], tat[n], total_wt = 0, total_tat = 0;
+    findWaitingTime(processes, n, bt, wt);
+    findTurnAroundTime(processes, n, bt, wt, tat);
+
+    printf("Processes   Burst time   Waiting time   Turn around time\n");
+
+    for (int  i=0; i<n; i++)
+    {
+        total_wt = total_wt + wt[i];
+        total_tat = total_tat + tat[i];
+        printf("   %d ",(i+1));
+        printf("       %d ", bt[i] );
+        printf("       %d",wt[i] );
+        printf("       %d\n",tat[i] );
+    }
+    int s=(float)total_wt / (float)n;
+    int t=(float)total_tat / (float)n;
+    printf("Average waiting time = %d",s);
+    printf("\n");
+    printf("Average turn around time = %d ",t);
+}
+
+
+int main()
+{
+    int processes[] = { 1, 2, 3, 4};
+    int n = sizeof processes / sizeof processes[0];
+    int  burst_time[] = {2,2,3,4};
+    findavgTime(processes, n,  burst_time);
+    return 0;
+}
+
+  </pre>
+</div>
+<hr>
+<div id="exp3">
+  <pre>
+
+    #include <iostream>
+using namespace std;
+int max(int a,int b)
+{
+   	if(a>b) return a;
+   	else return b;
+}
+
+int main()
+{
+	int n,temp,sum1=0,sum2=0;
+	float avgWaiting,avgTR;
+	cout<<"Enter total number of processes :";
+	cin>>n;
+	int cpu_burst[n],arival[n],Tstart[n],Tend[n],time=0,wTime[n],trTime[n];
+	cout<<"Enter CPU Burst and arival time of processes :"<<endl;
+	for(int i=0; i<n; i++) cin>>cpu_burst[i]>>arival[i];
+	for(int i=0; i<n-1; i++)
+	{
+		for(int j=0; j<n-1; j++)
+		{
+			if(arival[j]>arival[j+1])
+			{
+				temp=arival[j];
+				arival[j]=arival[j+1];
+				arival[j+1]=temp;
+
+				temp=cpu_burst[j];
+				cpu_burst[j]=cpu_burst[j+1];
+				cpu_burst[j+1]=temp;
+			}
+			else if(arival[j]==arival[j+1])
+			{
+				if(cpu_burst[j]>cpu_burst[j+1])
+				{
+					temp=arival[j];
+					arival[j]=arival[j+1];
+					arival[j+1]=temp;
+
+					temp=cpu_burst[j];
+					cpu_burst[j]=cpu_burst[j+1];
+					cpu_burst[j+1]=temp;
+				}
+			}
+		}
+	}
+	int i=0,j=0,min,pos=0;
+	while(j<n)
+	{
+		i=0;
+		while(cpu_burst[i]==0) i++;
+		min=cpu_burst[i];
+		pos=i;
+		while((arival[i]<=time)&&(i<n))
+		{
+			if(cpu_burst[i]==0)
+			{
+				i++;
+				continue;
+			}
+			if(min>cpu_burst[i]) pos=i;
+			i++;
+		}
+		if(j==0)
+		{
+			Tstart[j]=arival[pos];
+			Tend[j]=Tstart[pos]+cpu_burst[pos];
+			j++;
+		}
+		else
+		{
+			Tstart[j]=max(arival[pos],Tend[j-1]);
+			Tend[j]=Tstart[j]+cpu_burst[pos];
+			j++;
+		}
+		time=Tend[j-1];
+		cpu_burst[pos]=0;
+		cout<<"pos "<<pos<<endl;
+	}
+	for(int i=0; i<n; i++)
+	{
+		wTime[i]=Tstart[i]-arival[i];
+		trTime[i]=Tend[i]-arival[i];
+		sum1=sum1+wTime[i];
+		sum2=sum2+trTime[i];
+	}
+	avgWaiting=(float)sum1/n;
+	avgTR=(float)sum2/n;
+	cout<<"Waiting time :"<<endl;
+	for(int i=0; i<n; i++) cout<<wTime[i]<<" ";
+	cout<<endl;
+	cout<<"Average waiting time is "<<avgWaiting<<endl;
+	cout<<"Turn Around time :"<<endl;
+	for(int i=0; i<n; i++) cout<<trTime[i]<<" ";
+	cout<<endl;
+	cout<<"Average turn around time is "<<avgTR<<endl;
+}
+<hr>
+// Preemtive SJF
+#include<iostream>
+using namespace std;
+void swap(int *a, int *b) {
+   int temp = *a;
+   *a = *b;
+   *b = temp;
+}
+void arrangeArrival(int num, int mat[][3]) {
+   for(int i=0; i<num; i++) {
+      for(int j=0; j<num-i-1; j++) {
+         if(mat[1][j] > mat[1][j+1]) {
+            for(int k=0; k<5; k++) {
+               swap(mat[k][j], mat[k][j+1]);
+            }
+         }
+      }
+   }
+}
+void completionTime(int num, int mat[][3]) {
+   int temp, val;
+   mat[3][0] = mat[1][0] + mat[2][0];
+   mat[5][0] = mat[3][0] - mat[1][0];
+   mat[4][0] = mat[5][0] - mat[2][0];
+    for(int i=1; i<num; i++) {
+      temp = mat[3][i-1];
+      int low = mat[2][i];
+      for(int j=i; j<num; j++) {
+         if(temp >= mat[1][j] && low >= mat[2][j]) {
+            low = mat[2][j];
+            val = j;
+         }
+      }
+      mat[3][val] = temp + mat[2][val];
+      mat[5][val] = mat[3][val] - mat[1][val];
+      mat[4][val] = mat[5][val] - mat[2][val];
+      for(int k=0; k<6; k++) {
+         swap(mat[k][val], mat[k][i]);
+      }
+   }
+}
+int main() {
+   int num = 3, temp;
+   int mat[6][3] = {1, 2, 3, 3, 6, 4, 2, 3, 4};
+   cout<<"Before Arrange...\n";
+   cout<<"Process ID\tArrival Time\tBurst Time\n";
+   for(int i=0; i<num; i++) {
+      cout<<mat[0][i]<<"\t\t"<<mat[1][i]<<"\t\t"<<mat[2][i]<<"\n";
+   }
+   arrangeArrival(num, mat);
+   completionTime(num, mat);
+   cout<<"Final Result...\n";
+   cout<<"Process ID\tArrival Time\tBurst Time\tWaiting Time\tTurnaround Time\n";
+   for(int i=0; i<num; i++) {
+      cout<<mat[0][i]<<"\t\t"<<mat[1][i]<<"\t\t"<<mat[2][i]<<"\t\t"<<mat[4][i]<<"\t\t"<<mat[5][i]<<"\n";
+   }
+}
+
+
+  </pre>
+</div>
+<hr>
+
+
+  </body>
+</html>
